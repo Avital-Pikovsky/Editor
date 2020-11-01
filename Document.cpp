@@ -6,6 +6,25 @@
 #include <iostream>
 #include <iterator>
 
+void Document::plus() //+
+{
+    std::string line;
+    std::getline(std::cin, line);
+    if (!line.empty())
+    {
+        row += stoi(line);
+    }
+}
+
+void Document::minus() //.-
+{
+    std::string line;
+    std::getline(std::cin, line);
+    if (!line.empty())
+    {
+        row -= stoi(line);
+    }
+}
 void Document::add_lines_after() //a
 {
     for (std::string line; std::getline(std::cin, line);)
@@ -15,12 +34,7 @@ void Document::add_lines_after() //a
             if (line == ".")
                 return;
             document.emplace(document.begin() + (row + 1), line);
-            std::cout << " line :" << line << "." << std::endl;
             row++;
-            for (int i = 0; i < document.size(); i++)
-            {
-                std::cout << " in row: " << i << ", " << document.at(i) << std::endl;
-            }
         }
     }
 }
@@ -32,14 +46,12 @@ void Document::add_lines_before() //i
         if (!line.empty())
         {
             if (line == ".")
-                return;
-            document.emplace(document.begin() + row, line);
-            std::cout << " line :" << line << "." << std::endl;
-            row++;
-            for (int i = 0; i < document.size(); i++)
             {
-                std::cout << " in row: " << i << ", " << document.at(i) << std::endl;
+                row--;
+                return;
             }
+            document.emplace(document.begin() + row, line);
+            row++;
         }
     }
 }
@@ -54,19 +66,12 @@ void Document::replace_line() //c
             if (line == ".")
                 return;
             document.emplace(document.begin() + row, line);
-            std::cout << " line :" << line << "." << std::endl;
-            row++;
-            for (int i = 0; i < document.size(); i++)
-            {
-                std::cout << " in row: " << i << ", " << document.at(i) << std::endl;
-            }
         }
     }
 }
 void Document::delete_line() //d
 {
     document.erase(document.begin() + row);
-    return;
 }
 
 void Document::search() // /text/
@@ -78,7 +83,6 @@ void Document::search() // /text/
     {
 
         line = line.substr(0, line.size() - 1);
-        std::cout << " line :" << line << "." << std::endl;
         size_t found = document.at(row + 1).find(line);
         if (found != std::string::npos)
             row++;
@@ -91,7 +95,6 @@ void Document::search() // /text/
                 found = document.at(i).find(line);
             }
             row = i;
-            std::cout << "row: " << row << std::endl;
         }
     }
 }
@@ -135,6 +138,8 @@ void Document::write() //w file
 
     if (!line.empty())
     {
+        line = line.substr(1, line.size()); //delete enter
+
         std::ofstream output_file(line);
         std::ostream_iterator<std::string> output_iterator(output_file, "\n");
         std::copy(document.begin(), document.end(), output_iterator);

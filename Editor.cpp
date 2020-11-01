@@ -15,16 +15,20 @@ void Editor::loop()
 
         switch (c)
         {
+        case '1':
+            d.row = 0;
+            break;
+
         case '3':
-            d.row = 3;
+            d.row = 2;
             break;
 
-        case '+': //+2
-            d.row += 2;
+        case '+': //+
+            d.plus();
             break;
 
-        case '-': // .-1
-            d.row--;
+        case '-': // .-
+            d.minus();
             break;
 
         case '$':
