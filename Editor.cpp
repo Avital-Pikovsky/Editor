@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
+#include <mutex>
 
 void Editor::loop()
 {
@@ -34,13 +35,12 @@ void Editor::loop()
             d.add_lines_after();
             break;
 
-        case '.':
-            break;
-
         case 'i':
+            d.add_lines_before();
             break;
 
         case 'c':
+            d.replace_line();
             break;
 
         case 'd':
@@ -48,22 +48,28 @@ void Editor::loop()
             break;
 
         case '/': // /test/
+            d.search();
             break;
 
         case 's': //s/old/new/
+            d.change();
             break;
 
         case 'j':
+            d.connect();
             break;
 
         case 'w': //w file
+            d.write();
             break;
 
         case 'q':
             exit(EXIT_FAILURE);
 
         default:
-            // std::cout << "?" << std::endl;
+            if (c != '\n')
+                std::cout << "?" << std::endl;
+
             break;
         }
     }

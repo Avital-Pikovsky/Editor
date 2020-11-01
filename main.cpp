@@ -3,8 +3,16 @@
 
 int main(int argc, char *argv[])
 {
-    Editor editor(argv[1]);
+    if (argc > 1)
+    {
+        Editor editor(argv[1]);
+        editor.loop();
+    }
+    else
+    {
+        Editor editor;
+        editor.loop();
+    }
 
-    editor.loop();
     return 0;
 }

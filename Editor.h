@@ -9,6 +9,10 @@ class Editor
 {
 public:
     Document d;
+    Editor()
+    {
+        d.row = -1;
+    }
 
     Editor(std::string _file)
     {
