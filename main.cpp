@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc == 2) //a.out file.text
+    if (argc == 2) //a.out file.txt
     {
         Editor editor(argv[1]);
         editor.loop();
